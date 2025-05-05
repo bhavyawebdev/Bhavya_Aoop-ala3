@@ -1,61 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Management System</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Student Form</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Student Management System</h1>
-    
-    <% if (request.getAttribute("error") != null) { %>
-        <div class="error-message" style="max-width: 800px; margin: 20px auto;">
-            <%= request.getAttribute("error") %>
-        </div>
-    <% } %>
+  <div class="container">
+    <h1>Add New Student</h1>
+    <form id="studentForm">
+      <input type="text" id="name" placeholder="Enter Name" required />
+      <input type="email" id="email" placeholder="Enter Email" required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
-    <div style="text-align: center;">
-        <a href="add.jsp" class="add-button">Add New Student</a>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-            List<String[]> studentList = (List<String[]>) request.getAttribute("studentList");
-            if (studentList != null && !studentList.isEmpty()) {
-                for (String[] student : studentList) {
-            %>
-                <tr>
-                    <td><%= student[0] %></td>
-                    <td><%= student[1] %></td>
-                    <td><%= student[2] %></td>
-                    <td class="action-links">
-                        <a href="student?action=edit&id=<%= student[0] %>" class="edit-link">Edit</a>
-                        <a href="student?action=delete&id=<%= student[0] %>" class="delete-link">Delete</a>
-                    </td>
-                </tr>
-            <%
-                }
-            } else {
-            %>
-                <tr>
-                    <td colspan="4" style="text-align: center; padding: 20px;">
-                        No students found. Click "Add New Student" to add one.
-                    </td>
-                </tr>
-            <%
-            }
-            %>
-        </tbody>
-    </table>
+  <script>
+    document.getElementById('studentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const student = {
+        id: 3,
+        name: name,
+        email: email,
+      };
+      localStorage.setItem('student', JSON.stringify(student));
+      window.location.href = 'student.html';
+    });
+  </script>
 </body>
-</html>
+</html> 
